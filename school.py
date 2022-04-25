@@ -1,21 +1,17 @@
-from secrets import choice
-from turtle import title
-from numpy import save
 import streamlit as st
 from database import Movie,Product,engine
 from sqlalchemy.orm import sessionmaker
 
 def opendb():
     Sesion = sessionmaker(bind=engine)
-    return Sesion
+    return Sesion()
 
-
-    def save_student(title,year):
-        db = opendb()
-        movie =Movie(title = title,year = year)
-        db.add(movie)
-        db.commit()
-        db.close()
+def save_movie(title,year):
+    db = opendb()
+    movie =Movie(title = title,year = year)
+    db.add(movie)
+    db.commit()
+    db.close()
 
 
 st.title('db')
@@ -29,7 +25,7 @@ if choice == oplist[0]:
     year = f.selectbox("title",[1,23,44,55])
     btn = f.form_submit_button('save movie')
     if btn and title and year:
-        save(title,year)
+        save_movie(title,year)
         st.success('form saved')
 elif choice == oplist[1]:
     st.header('view a student detail')
